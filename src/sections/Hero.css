@@ -56,7 +56,11 @@
 }
 
 .hero-spacer { flex: 1 1 auto; min-height: 3rem; }
-@media (min-width: 640px) { .hero-spacer { min-height: 4rem; } }
+/* phones: leave room above the name for the portrait so it never sits under the copy */
+.hero.has-portrait .hero-spacer { min-height: 46svh; }
+@media (min-width: 640px) {
+  .hero-spacer, .hero.has-portrait .hero-spacer { min-height: 4rem; }
+}
 
 .hero-stage { position: relative; }
 .hero-name {
@@ -89,10 +93,12 @@
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  height: 86vh;
+  height: calc(46svh + 100%);
   width: 80vw;
   pointer-events: none;
 }
+@media (min-width: 640px) { .hero-portrait { height: 62vh; } }
+@media (min-width: 1280px) { .hero-portrait { height: 86vh; } }
 @media (min-width: 640px) { .hero-portrait { width: 48vw; } }
 @media (min-width: 1024px) { .hero-portrait { width: 36vw; } }
 .hero-portrait-img { position: absolute; inset: 0; pointer-events: auto; }
@@ -120,4 +126,5 @@
   letter-spacing: 0.22em;
   color: var(--muted);
 }
+@media (max-width: 639px) { .hero-cue { display: none; } }
 .hero-cue-rule { width: 2.5rem; height: 1px; background: var(--accent); }

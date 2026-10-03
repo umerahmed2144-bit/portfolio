@@ -28,11 +28,12 @@ grep -n TODO_ src/content.js
 | `TODO_KAHWA_URL` | Live link for kahwa. (FulfillIQ, NurtureAI, StudyForge and RestockIQ already point at their Vercel URLs) |
 | `TODO_KAHWA_SCREENSHOT_1` | Put an image in `public/img/` and set it to e.g. `/img/kahwa-1.jpg` (1440×900 crops work best). The other products already use screenshots of their live apps. |
 | `TODO_CLIENT_CARTEBLANCHE_IMAGE`, `TODO_CLIENT_UKIYO_IMAGE`, `TODO_CLIENT_RIZQ_IMAGE` | Optional client or brand images (4:5 crop) |
-| `TODO_PORTRAIT` | Save a chest-up cutout with the background removed (1600px+ tall) as `public/img/portrait.webp`. It appears in front of the giant name automatically. |
 
 Product status badges come from `status` / `tone` on each product. kahwa. currently reads **"Status TBC"**. Change them to `"Live"` / `tone: "live"` once confirmed.
 
 While `SHOW_TODOS = true` (at the top of `content.js`), every placeholder shows its TODO key on the page so it's easy to spot. Set it to `false` before launch to show neutral "coming soon" labels instead.
+
+The hero portrait is `public/img/portrait.webp`, a transparent cutout. To change it, replace that file with another background-removed, chest-up image.
 
 ## Structure
 

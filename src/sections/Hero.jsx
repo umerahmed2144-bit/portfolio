@@ -27,9 +27,18 @@ export default function Hero() {
   }, []);
 
   const D = REVEAL_DELAY;
+  const [hasPortrait, setHasPortrait] = useState(false);
+
+  // Only reserve space for the portrait once the image has actually loaded.
+  useEffect(() => {
+    if (!person.portrait) return;
+    const img = new Image();
+    img.onload = () => setHasPortrait(true);
+    img.src = person.portrait;
+  }, []);
 
   return (
-    <section id="top" className="hero" ref={ref}>
+    <section id="top" className={`hero${hasPortrait ? " has-portrait" : ""}`} ref={ref}>
       <div className="hero-canvas" aria-hidden="true">
         <Suspense fallback={null}>
           <HeroCanvas active={onScreen} still={reduced} compact={compact} />
