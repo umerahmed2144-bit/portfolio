@@ -83,7 +83,7 @@ export const products = [
         body: "It answers a planning question that usually lives inside expensive ERP systems, in a tool a small factory can actually use. I wrote the full spec first (data model, screens, BOM logic, design tokens, seed data), then built it with Claude Code.",
       },
     ],
-    url: "TODO_FULFILLIQ_URL",
+    url: "https://fulfilliq-three.vercel.app",
     images: [
       "TODO_FULFILLIQ_SCREENSHOT_1",
       "TODO_FULFILLIQ_SCREENSHOT_2",
@@ -95,8 +95,8 @@ export const products = [
     name: "NurtureAI",
     tagline: "A child development companion built for Pakistan.",
     audience: "Pakistani parents & schools",
-    status: "Status TBC",
-    tone: "tbc",
+    status: "Live",
+    tone: "live",
     stack: ["Claude Code"],
     blocks: [
       {
@@ -112,7 +112,7 @@ export const products = [
         body: "English, Urdu and Roman Urdu from day one. Three revenue streams: freemium subscriptions, per-student school licences and booking commission. Backed by a full proposal: 7Ps, MVP scope, validation plan and roadmap.",
       },
     ],
-    url: "TODO_NURTUREAI_URL",
+    url: "https://nurture-ai-kappa.vercel.app",
     images: ["TODO_NURTUREAI_SCREENSHOT_1"],
   },
   {
@@ -120,8 +120,8 @@ export const products = [
     name: "StudyForge",
     tagline: "From messy notes to a day-by-day study plan.",
     audience: "Students · B2C",
-    status: "Status TBC",
-    tone: "tbc",
+    status: "Live",
+    tone: "live",
     stack: ["React", "Tailwind", "Claude API", "Vercel"],
     blocks: [
       {
@@ -137,7 +137,7 @@ export const products = [
         body: "No sign-up, so zero friction. Three generations per visitor per day keep API costs in check, and a “Built by Umer Ahmed” banner turns every shared plan into marketing.",
       },
     ],
-    url: "TODO_STUDYFORGE_URL",
+    url: "https://studyforge-flax.vercel.app",
     images: ["TODO_STUDYFORGE_SCREENSHOT_1"],
   },
   {
@@ -158,7 +158,7 @@ export const products = [
         body: "A raw material tracker where production staff log every withdrawal. Stock updates instantly, each material is colour-coded red, yellow or green, and days-until-stockout is estimated from rolling average consumption.",
       },
     ],
-    url: "TODO_RESTOCKIQ_URL",
+    url: "https://restockiq-sable.vercel.app",
     images: ["TODO_RESTOCKIQ_SCREENSHOT_1"],
   },
   {

@@ -29,12 +29,12 @@ grep -n TODO_ src/content.js
 | `TODO_WHATSAPP_NUMBER` | Digits with country code, e.g. `923001234567` (builds the `wa.me` link) |
 | `TODO_LINKEDIN_URL` | Full LinkedIn profile URL |
 | `TODO_CV_URL` | Put the PDF in `public/cv/`, then set this to e.g. `/cv/umer-ahmed-cv.pdf` |
-| `TODO_FULFILLIQ_URL`, `TODO_NURTUREAI_URL`, `TODO_STUDYFORGE_URL`, `TODO_RESTOCKIQ_URL`, `TODO_KAHWA_URL` | Live product links |
+| `TODO_KAHWA_URL` | Live link for kahwa. (FulfillIQ, NurtureAI, StudyForge and RestockIQ already point at their Vercel URLs) |
 | `TODO_FULFILLIQ_SCREENSHOT_1..3`, `TODO_<PRODUCT>_SCREENSHOT_1` | Put images in `public/img/`, then set these to e.g. `/img/fulfilliq-1.webp`. Use a 16:10 crop for FulfillIQ and 16:11 for the other products. |
 | `TODO_CLIENT_CARTEBLANCHE_IMAGE`, `TODO_CLIENT_UKIYO_IMAGE`, `TODO_CLIENT_RIZQ_IMAGE` | Optional client or brand images (4:5 crop) |
 | `TODO_PORTRAIT` | Save a chest-up cutout with the background removed (1600px+ tall) as `public/img/portrait.webp`. It appears in front of the giant name automatically. |
 
-Product status badges come from `status` / `tone` on each product. NurtureAI, StudyForge and kahwa. currently read **"Status TBC"**. Change them to `"Live"` / `tone: "live"` once confirmed.
+Product status badges come from `status` / `tone` on each product. kahwa. currently reads **"Status TBC"**. Change them to `"Live"` / `tone: "live"` once confirmed.
 
 While `SHOW_TODOS = true` (at the top of `content.js`), every placeholder shows its TODO key on the page so it's easy to spot. Set it to `false` before launch to show neutral "coming soon" labels instead.
 
