@@ -20,12 +20,12 @@ export const person = {
 };
 
 export const contact = {
-  email: "TODO_EMAIL",
+  email: "umerahmed2144@gmail.com",
   // Digits only, with country code, e.g. "923001234567"
-  whatsapp: "TODO_WHATSAPP_NUMBER",
-  linkedin: "TODO_LINKEDIN_URL",
+  whatsapp: "923097889937",
+  linkedin: "https://www.linkedin.com/in/umer-ahmed-0a8a87373",
   // e.g. "/cv/umer-ahmed-cv.pdf" once the PDF is in public/cv/
-  cv: "TODO_CV_URL",
+  cv: "/cv/umer-ahmed-cv.pdf",
 };
 
 export const nav = [

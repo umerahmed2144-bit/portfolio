@@ -25,10 +25,6 @@ grep -n TODO_ src/content.js
 
 | Key | What to put there |
 | --- | --- |
-| `TODO_EMAIL` | Email address, e.g. `hello@umerahmed.com` |
-| `TODO_WHATSAPP_NUMBER` | Digits with country code, e.g. `923001234567` (builds the `wa.me` link) |
-| `TODO_LINKEDIN_URL` | Full LinkedIn profile URL |
-| `TODO_CV_URL` | Put the PDF in `public/cv/`, then set this to e.g. `/cv/umer-ahmed-cv.pdf` |
 | `TODO_KAHWA_URL` | Live link for kahwa. (FulfillIQ, NurtureAI, StudyForge and RestockIQ already point at their Vercel URLs) |
 | `TODO_KAHWA_SCREENSHOT_1` | Put an image in `public/img/` and set it to e.g. `/img/kahwa-1.jpg` (1440×900 crops work best). The other products already use screenshots of their live apps. |
 | `TODO_CLIENT_CARTEBLANCHE_IMAGE`, `TODO_CLIENT_UKIYO_IMAGE`, `TODO_CLIENT_RIZQ_IMAGE` | Optional client or brand images (4:5 crop) |
