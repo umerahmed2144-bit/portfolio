@@ -1,0 +1,115 @@
+.about-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2rem;
+}
+@media (min-width: 1024px) {
+  .about-top { grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--gutter); align-items: end; }
+  .about-head { grid-column: span 6; }
+  .about-pitch { grid-column: span 6; }
+}
+.about-h { margin-top: 1.5rem; font-size: var(--fs-h2); line-height: 0.95; max-width: 14ch; }
+@media (min-width: 640px) { .about-h { font-size: var(--fs-h1); } }
+.about-pitch { display: flex; flex-direction: column; gap: 1.25rem; max-width: 52ch; }
+
+/* stats band (Impact layout) */
+.stats {
+  margin-top: 5rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  border-top: 1px solid var(--line);
+}
+@media (min-width: 640px) { .stats { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1024px) { .stats { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-bottom: 1px solid var(--line);
+  padding: 2.5rem 0;
+}
+@media (min-width: 640px) and (max-width: 1023px) {
+  .stat:nth-child(even) { border-left: 1px solid var(--line); padding-left: 2rem; }
+}
+@media (min-width: 1024px) {
+  .stat { padding: 3rem 0; }
+  .stat:not(:nth-child(4n + 1)) { border-left: 1px solid var(--line); padding-left: 2rem; }
+}
+.stat-value {
+  font-size: var(--fs-display);
+  line-height: 1;
+  transition: color 340ms ease-out;
+}
+.stat:hover .stat-value { color: var(--accent-soft); }
+.stat-label {
+  max-width: 20ch;
+  font-size: var(--fs-body);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+}
+
+/* two-column detail */
+.about-grid {
+  margin-top: 6rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 4rem;
+}
+@media (min-width: 1024px) {
+  .about-grid { grid-template-columns: 1fr 1fr; gap: calc(var(--gutter) * 2); }
+}
+.about-sub { color: var(--accent-soft); letter-spacing: 0.22em; }
+.about-sub-gap { margin-top: 3.5rem; }
+.about-lede { margin-top: 1rem; font-size: var(--fs-lead); line-height: 1.45; max-width: 46ch; }
+
+.steps { margin-top: 2rem; }
+.step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 1.5rem;
+  border-top: 1px solid var(--line);
+  padding: 1.5rem 0;
+}
+.step:last-child { border-bottom: 1px solid var(--line); }
+.step-index { font-size: var(--fs-h3); line-height: 1.15; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--accent); }
+.step-title { font-size: var(--fs-h3); line-height: 1.15; font-weight: 600; letter-spacing: -0.01em; }
+.step-body { margin-top: 0.5rem; color: var(--muted); max-width: 44ch; }
+
+.stack { margin-top: 1.5rem; }
+.stack-row, .course-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.75rem;
+  border-top: 1px solid var(--line);
+  padding: 1.25rem 0;
+}
+@media (min-width: 640px) {
+  .stack-row, .course-row { grid-template-columns: 11rem 1fr; align-items: baseline; gap: 1.5rem; }
+}
+
+.edu { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.edu-degree { font-size: var(--fs-h3); line-height: 1.2; font-weight: 600; letter-spacing: -0.01em; }
+.coursework { margin-top: 2rem; }
+.coursework .course-row:last-child { border-bottom: 1px solid var(--line); }
+.course-row dd { color: var(--foreground); }
+
+.thesis {
+  margin-top: 2.5rem;
+  padding: 1.75rem;
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  border-radius: 0.25rem;
+  background: radial-gradient(120% 120% at 0% 0%, rgba(139, 92, 246, 0.14), transparent 60%), var(--surface);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.thesis .label { color: var(--accent-soft); }
+.thesis p { font-size: var(--fs-lead); line-height: 1.45; }
+
+.applied { margin-top: 1.25rem; display: grid; gap: 0.75rem; }
+.applied li { display: flex; gap: 0.75rem; color: var(--muted); }
+.applied li::before { content: "↳"; color: var(--accent-2); }
+
+.certs { margin-top: 1.25rem; display: flex; flex-direction: column; gap: 1rem; }
+.chip-accent { border-color: rgba(34, 211, 238, 0.4); color: var(--accent-2); }

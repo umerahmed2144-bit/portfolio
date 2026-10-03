@@ -1,0 +1,100 @@
+/* ---------- Lead case study ---------- */
+.case {
+  margin-top: 4rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 3rem;
+  padding-bottom: 6rem;
+  border-bottom: 1px solid var(--line);
+}
+@media (min-width: 1024px) {
+  .case { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); }
+  .case-media { grid-column: span 7; position: sticky; top: 6rem; align-self: start; }
+  .case-body { grid-column: span 5; }
+}
+.case-main { aspect-ratio: 16 / 10; width: 100%; }
+.case-thumbs { margin-top: 1rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.case-thumb { aspect-ratio: 16 / 10; width: 100%; }
+.case-thumb .liquid-placeholder-note { font-size: 0.625rem; }
+
+.case-meta { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.case-index { font-size: var(--fs-h3); color: var(--accent); }
+.case-name {
+  margin-top: 1.5rem;
+  font-size: var(--fs-h1);
+  line-height: 0.95;
+  overflow-wrap: anywhere;
+  transition: color 340ms ease-out;
+}
+.case:hover .case-name { color: var(--accent-soft); }
+.case-tagline {
+  margin-top: 1rem;
+  font-size: var(--fs-h3);
+  line-height: 1.25;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.case-audience { margin-top: 1rem; letter-spacing: 0.22em; }
+.case-blocks { margin-top: 2.5rem; }
+.case-block {
+  display: grid;
+  gap: 0.75rem;
+  border-top: 1px solid var(--line);
+  padding: 1.5rem 0;
+}
+.case-block dt { color: var(--accent-soft); }
+.case-block dd { color: var(--muted); max-width: 52ch; }
+.case-foot {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+  border-top: 1px solid var(--line);
+  padding-top: 1.5rem;
+}
+
+/* ---------- Product grid ---------- */
+.products {
+  margin-top: 6rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  column-gap: var(--gutter);
+  row-gap: 5rem;
+}
+@media (min-width: 768px) {
+  .products { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .product.is-offset { margin-top: 6rem; }
+}
+.product-img { aspect-ratio: 16 / 11; width: 100%; }
+.product-row {
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--line);
+  padding-top: 1.25rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+.product-name {
+  font-size: var(--fs-h3);
+  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition: color 420ms var(--ease-expo);
+}
+.product:hover .product-name { color: var(--accent-soft); }
+.product-tagline { margin-top: 0.5rem; max-width: 42ch; color: var(--foreground); }
+.product-side { flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; text-align: right; }
+.product-audience { margin-top: 0.75rem; letter-spacing: 0.22em; }
+.product-blocks { margin-top: 1.5rem; display: grid; gap: 1.25rem; }
+.product-block { display: grid; gap: 0.375rem; }
+.product-block dt { color: var(--accent-soft); }
+.product-block dd { color: var(--muted); max-width: 52ch; }
+.product-foot {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.25rem;
+}
+.product-link.is-todo { flex-wrap: wrap; white-space: normal; text-align: left; justify-content: flex-start; padding-block: 0.5rem; }
