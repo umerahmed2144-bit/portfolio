@@ -85,9 +85,9 @@ export const products = [
     ],
     url: "https://fulfilliq-three.vercel.app",
     images: [
-      "TODO_FULFILLIQ_SCREENSHOT_1",
-      "TODO_FULFILLIQ_SCREENSHOT_2",
-      "TODO_FULFILLIQ_SCREENSHOT_3",
+      "/img/fulfilliq-1.jpg",
+      "/img/fulfilliq-2.jpg",
+      "/img/fulfilliq-3.jpg",
     ],
   },
   {
@@ -113,7 +113,7 @@ export const products = [
       },
     ],
     url: "https://nurture-ai-kappa.vercel.app",
-    images: ["TODO_NURTUREAI_SCREENSHOT_1"],
+    images: ["/img/nurtureai-1.jpg"],
   },
   {
     id: "studyforge",
@@ -138,7 +138,7 @@ export const products = [
       },
     ],
     url: "https://studyforge-flax.vercel.app",
-    images: ["TODO_STUDYFORGE_SCREENSHOT_1"],
+    images: ["/img/studyforge-1.jpg"],
   },
   {
     id: "restockiq",
@@ -159,7 +159,7 @@ export const products = [
       },
     ],
     url: "https://restockiq-sable.vercel.app",
-    images: ["TODO_RESTOCKIQ_SCREENSHOT_1"],
+    images: ["/img/restockiq-1.jpg"],
   },
   {
     id: "kahwa",

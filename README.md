@@ -30,7 +30,7 @@ grep -n TODO_ src/content.js
 | `TODO_LINKEDIN_URL` | Full LinkedIn profile URL |
 | `TODO_CV_URL` | Put the PDF in `public/cv/`, then set this to e.g. `/cv/umer-ahmed-cv.pdf` |
 | `TODO_KAHWA_URL` | Live link for kahwa. (FulfillIQ, NurtureAI, StudyForge and RestockIQ already point at their Vercel URLs) |
-| `TODO_FULFILLIQ_SCREENSHOT_1..3`, `TODO_<PRODUCT>_SCREENSHOT_1` | Put images in `public/img/`, then set these to e.g. `/img/fulfilliq-1.webp`. Use a 16:10 crop for FulfillIQ and 16:11 for the other products. |
+| `TODO_KAHWA_SCREENSHOT_1` | Put an image in `public/img/` and set it to e.g. `/img/kahwa-1.jpg` (1440×900 crops work best). The other products already use screenshots of their live apps. |
 | `TODO_CLIENT_CARTEBLANCHE_IMAGE`, `TODO_CLIENT_UKIYO_IMAGE`, `TODO_CLIENT_RIZQ_IMAGE` | Optional client or brand images (4:5 crop) |
 | `TODO_PORTRAIT` | Save a chest-up cutout with the background removed (1600px+ tall) as `public/img/portrait.webp`. It appears in front of the giant name automatically. |
 
