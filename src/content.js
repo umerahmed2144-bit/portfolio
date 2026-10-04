@@ -5,7 +5,7 @@
 
 // While true, placeholders show their TODO key on the page so they're easy to
 // spot. Flip to false before launch to show a neutral "coming soon" instead.
-export const SHOW_TODOS = true;
+export const SHOW_TODOS = false;
 
 export const isTodo = (value) => !value || String(value).startsWith("TODO_");
 
@@ -57,7 +57,6 @@ export const marquee = [
 export const productsIntro = {
   eyebrow: "Featured Products",
   heading: ["Problems solved,", "products shipped."],
-  count: "05 / Products",
 };
 
 export const products = [
@@ -163,6 +162,8 @@ export const products = [
   },
   {
     id: "kahwa",
+    // Hidden until it has a live link and a screenshot. Delete this line to show it.
+    hidden: true,
     name: "kahwa.",
     tagline: "A cafe finder that feels like a concierge.",
     audience: "Coffee lovers in Lahore & Karachi",
@@ -187,6 +188,9 @@ export const products = [
     images: ["TODO_KAHWA_SCREENSHOT_1"],
   },
 ];
+
+// Products actually shown on the site.
+export const visibleProducts = products.filter((p) => !p.hidden);
 
 export const clientsIntro = {
   eyebrow: "Client Work",
@@ -298,7 +302,7 @@ export const aboutIntro = {
 };
 
 export const stats = [
-  { value: "5", label: "Products shipped" },
+  { value: String(visibleProducts.length), label: "Products shipped" },
   { value: "4", label: "Experiments & side projects" },
   { value: "550K+", label: "PKR raised for Rizq LSE" },
   { value: "Daily", label: "Building with AI since mid-2025" },

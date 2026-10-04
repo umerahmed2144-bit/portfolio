@@ -1,11 +1,13 @@
-import { experiments, products, services, servicesIntro } from "../content";
+import { experiments, products, services, servicesIntro, visibleProducts } from "../content";
 import Reveal from "../components/Reveal";
 import SectionHead from "./SectionHead";
 import "./Services.css";
 
+// Returns null for hidden products so they drop out of the proof list.
 const proofLink = (id) => {
-  const p = products.find((x) => x.id === id);
+  const p = visibleProducts.find((x) => x.id === id);
   if (p) return { href: `#product-${id}`, name: p.name };
+  if (products.some((x) => x.id === id)) return null;
   const x = experiments.find((e) => e.id === id);
   return { href: `#lab-${id}`, name: x?.name ?? id };
 };
@@ -27,6 +29,7 @@ export default function Services() {
               <ul>
                 {s.proof.map((id) => {
                   const l = proofLink(id);
+                  if (!l) return null;
                   return (
                     <li key={id}>
                       <a href={l.href} className="service-proof-link">

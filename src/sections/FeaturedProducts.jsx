@@ -1,4 +1,4 @@
-import { products, productsIntro } from "../content";
+import { productsIntro, visibleProducts } from "../content";
 import Reveal from "../components/Reveal";
 import LiquidImage from "../components/LiquidImage";
 import TodoLink from "../components/TodoLink";
@@ -128,10 +128,11 @@ function ProductCard({ product, index }) {
 }
 
 export default function FeaturedProducts() {
-  const [lead, ...rest] = products;
+  const [lead, ...rest] = visibleProducts;
+  const count = `${String(visibleProducts.length).padStart(2, "0")} / Products`;
   return (
     <section id="work" className="section work">
-      <SectionHead eyebrow={productsIntro.eyebrow} heading={productsIntro.heading} aside={productsIntro.count} />
+      <SectionHead eyebrow={productsIntro.eyebrow} heading={productsIntro.heading} aside={count} />
       <CaseStudy product={lead} />
       <ul className="products">
         {rest.map((p, i) => (

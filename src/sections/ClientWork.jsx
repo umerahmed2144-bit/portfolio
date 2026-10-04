@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { clients, clientsIntro, products } from "../content";
+import { clients, clientsIntro, isTodo, visibleProducts } from "../content";
 import Reveal from "../components/Reveal";
 import RevealText from "../components/RevealText";
 import LiquidImage from "../components/LiquidImage";
 import SectionHead from "./SectionHead";
 import "./ClientWork.css";
 
-const productName = (id) => products.find((p) => p.id === id)?.name ?? id;
+const productName = (id) => visibleProducts.find((p) => p.id === id)?.name;
 
 export default function ClientWork() {
   const [active, setActive] = useState(0);
@@ -68,10 +68,10 @@ export default function ClientWork() {
                   <li className="chip" key={t}>{t}</li>
                 ))}
               </ul>
-              {c.related.length > 0 && (
+              {c.related.some(productName) && (
                 <p className="client-related">
                   Led to{" "}
-                  {c.related.map((id, i) => (
+                  {c.related.filter(productName).map((id, i) => (
                     <span key={id}>
                       {i > 0 && " & "}
                       <a href={`#product-${id}`}>{productName(id)}</a>
@@ -82,6 +82,8 @@ export default function ClientWork() {
             </div>
           </blockquote>
 
+          {/* Client images are optional: no image column until one is added. */}
+          {!isTodo(c.image) && (
           <Reveal className="client-media" y={0} scale={1.06} duration={640}>
             <LiquidImage
               key={c.image}
@@ -92,6 +94,7 @@ export default function ClientWork() {
               className="client-img"
             />
           </Reveal>
+          )}
         </div>
       </div>
     </section>
