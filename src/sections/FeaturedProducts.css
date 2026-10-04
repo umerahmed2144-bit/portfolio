@@ -14,7 +14,14 @@
 }
 .case-main { aspect-ratio: 16 / 10; width: 100%; }
 .case-thumbs { margin-top: 1rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.case-thumbs.is-single { grid-template-columns: minmax(0, 1fr); }
 .case-thumb { aspect-ratio: 16 / 10; width: 100%; }
+.case + .case { margin-top: 6rem; }
+@media (min-width: 1024px) {
+  /* alternate sides so consecutive case studies don't read as a template */
+  .case.is-flipped .case-media { order: 2; }
+  .case.is-flipped .case-body { order: 1; }
+}
 .case-thumb .liquid-placeholder-note { font-size: 0.625rem; }
 
 .case-meta { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
@@ -98,3 +105,56 @@
   gap: 1.25rem;
 }
 .product-link.is-todo { flex-wrap: wrap; white-space: normal; text-align: left; justify-content: flex-start; padding-block: 0.5rem; }
+
+/* ---------- Development journey ---------- */
+.journey {
+  grid-column: 1 / -1;
+  order: 3; /* stay last even when the case is flipped */
+  border-top: 1px solid var(--line);
+  padding-top: 3rem;
+}
+.journey-title { color: var(--accent-soft); letter-spacing: 0.22em; }
+.journey-steps {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  position: relative;
+}
+.journey-step {
+  position: relative;
+  padding: 0 0 2rem 2rem;
+  border-left: 1px solid var(--line-strong);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.journey-step:last-child { padding-bottom: 0; border-left-color: transparent; }
+.journey-dot {
+  position: absolute;
+  left: -0.3125rem;
+  top: 0.125rem;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 9999px;
+  background: var(--accent);
+  box-shadow: 0 0 0.75rem var(--accent);
+}
+.journey-step:last-child .journey-dot { background: var(--accent-2); box-shadow: 0 0 0.75rem var(--accent-2); }
+.journey-label { color: var(--accent-soft); }
+.journey-step-title {
+  font-size: var(--fs-h3);
+  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.journey-body { color: var(--muted); max-width: 44ch; }
+@media (min-width: 768px) {
+  .journey-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: 2.5rem; }
+  .journey-step { border-left: 0; border-top: 1px solid var(--line-strong); padding: 1.5rem 0 0; }
+  .journey-step:last-child { border-top-color: var(--line-strong); }
+  .journey-dot { left: 0; top: -0.3125rem; }
+}
+@media (min-width: 1280px) {
+  .journey-steps { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}

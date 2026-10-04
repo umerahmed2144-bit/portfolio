@@ -28,10 +28,31 @@ function LiveLink({ product }) {
   );
 }
 
-function CaseStudy({ product }) {
+const num = (n) => String(n).padStart(2, "0");
+
+// Step-by-step build story shown under a case study.
+function Journey({ steps }) {
+  return (
+    <div className="journey">
+      <Reveal as="h4" className="label journey-title">Development journey</Reveal>
+      <ol className="journey-steps">
+        {steps.map((s, i) => (
+          <Reveal as="li" key={s.title} className="journey-step" delay={i * 90} duration={560}>
+            <span className="journey-dot" aria-hidden="true" />
+            <span className="label journey-label">{s.label}</span>
+            <h5 className="journey-step-title">{s.title}</h5>
+            <p className="journey-body">{s.body}</p>
+          </Reveal>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
+function CaseStudy({ product, number, flipped = false }) {
   const [main, ...thumbs] = product.images;
   return (
-    <article id={`product-${product.id}`} className="case group">
+    <article id={`product-${product.id}`} className={`case group${flipped ? " is-flipped" : ""}`}>
       <Reveal className="case-media" y={60} duration={620}>
         <LiquidImage
           src={main}
@@ -40,7 +61,7 @@ function CaseStudy({ product }) {
           className="case-main"
         />
         {thumbs.length > 0 && (
-          <div className="case-thumbs">
+          <div className={`case-thumbs${thumbs.length === 1 ? " is-single" : ""}`}>
             {thumbs.map((src, i) => (
               <LiquidImage
                 key={i}
@@ -56,7 +77,7 @@ function CaseStudy({ product }) {
 
       <div className="case-body">
         <Reveal className="case-meta" delay={80}>
-          <span className="case-index display">01</span>
+          <span className="case-index display">{num(number)}</span>
           <Status product={product} />
         </Reveal>
         <Reveal delay={120}>
@@ -77,11 +98,12 @@ function CaseStudy({ product }) {
           <LiveLink product={product} />
         </Reveal>
       </div>
+      {product.journey && <Journey steps={product.journey} />}
     </article>
   );
 }
 
-function ProductCard({ product, index }) {
+function ProductCard({ product, index, number }) {
   const offset = index % 2 === 1;
   return (
     <Reveal
@@ -105,7 +127,7 @@ function ProductCard({ product, index }) {
             <p className="product-tagline">{product.tagline}</p>
           </div>
           <div className="product-side">
-            <span className="label">{String(index + 2).padStart(2, "0")}</span>
+            <span className="label">{num(number)}</span>
             <Status product={product} />
           </div>
         </div>
@@ -128,15 +150,18 @@ function ProductCard({ product, index }) {
 }
 
 export default function FeaturedProducts() {
-  const [lead, ...rest] = visibleProducts;
+  const featured = visibleProducts.filter((p) => p.featured);
+  const rest = visibleProducts.filter((p) => !p.featured);
   const count = `${String(visibleProducts.length).padStart(2, "0")} / Products`;
   return (
     <section id="work" className="section work">
       <SectionHead eyebrow={productsIntro.eyebrow} heading={productsIntro.heading} aside={count} />
-      <CaseStudy product={lead} />
+      {featured.map((p, i) => (
+        <CaseStudy key={p.id} product={p} number={i + 1} flipped={i % 2 === 1} />
+      ))}
       <ul className="products">
         {rest.map((p, i) => (
-          <ProductCard key={p.id} product={p} index={i} />
+          <ProductCard key={p.id} product={p} index={i} number={featured.length + i + 1} />
         ))}
       </ul>
     </section>

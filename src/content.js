@@ -62,6 +62,7 @@ export const productsIntro = {
 export const products = [
   {
     id: "fulfilliq",
+    featured: true,
     name: "FulfillIQ",
     tagline: "“Can I deliver this order on time?”",
     audience: "Small manufacturers · B2B",
@@ -91,28 +92,66 @@ export const products = [
   },
   {
     id: "nurtureai",
+    // Shown as a full case study (like FulfillIQ) with a development journey.
+    featured: true,
     name: "NurtureAI",
-    tagline: "A child development companion built for Pakistan.",
-    audience: "Pakistani parents & schools",
-    status: "Live",
+    tagline: "Understand how your child learns — not just their grades.",
+    audience: "Pakistani parents & schools · Ages 4–12",
+    status: "Live demo",
     tone: "live",
-    stack: ["Claude Code"],
+    stack: ["React", "Vite", "Claude Code", "Vercel"],
     blocks: [
       {
         title: "Problem",
-        body: "Parents of children aged 4 to 12 have few accessible, culturally relevant ways to track development or know when to seek help. Most parenting apps are Western templates, translated badly.",
+        body: "Report cards show grades, not how a child is learning. Reading, attention, habits and wellbeing are scattered across school reports, tutors, Google searches and WhatsApp advice — and most parenting apps are Western templates, translated badly.",
       },
       {
         title: "What I built",
-        body: "Parents log everyday observations; NurtureAI builds a continuous development profile and suggests personalised, age-appropriate activities. It never diagnoses — it surfaces patterns and points to psychologists, speech therapists, tutors and OTs through a referral marketplace.",
+        body: "Parents build a profile in under five minutes and log tiny check-ins (reading, focus, sleep, screen time, mood). NurtureAI turns the patterns into interest-matched activities with a plain-language reason, a weekly report, and support when it's needed. Two children never get the same worksheet.",
       },
       {
-        title: "Business thinking",
-        body: "English, Urdu and Roman Urdu from day one. Three revenue streams: freemium subscriptions, per-student school licences and booking commission. Backed by a full proposal: 7Ps, MVP scope, validation plan and roadmap.",
+        title: "Business model",
+        body: "Three revenue streams in one ecosystem: freemium for parents (PKR 1,000–2,000 / month, priced below a single tuition session), school licences (PKR 1,500–3,000 per student per year) and commission on professional bookings. Pricing is illustrative, to be validated through customer interviews.",
+      },
+      {
+        title: "Safety by design",
+        body: "Support and visibility, never diagnosis. It only suggests a psychologist, speech therapist or OT after weeks of consistent signals, with parental consent, minimal data and encrypted storage.",
+      },
+    ],
+    journey: [
+      {
+        label: "Research",
+        title: "Start from the parent's problem",
+        body: "Mapped where Pakistani parents actually look for answers (report cards, tutors, Google, WhatsApp) and why none of them show the whole child.",
+      },
+      {
+        label: "Proposal",
+        title: "Business case before code",
+        body: "Wrote a full business proposal: 7Ps marketing mix, MVP scope, customer validation plan, three revenue streams and an expansion roadmap.",
+      },
+      {
+        label: "Principles",
+        title: "Set the guardrails",
+        body: "Decided early what it would never do: diagnose. Referrals only after sustained patterns; privacy and parental consent first.",
+      },
+      {
+        label: "Prototype",
+        title: "Build a demo you can hold",
+        body: "Built a React/Vite landing page and phone-frame prototype with Claude Code: dashboard, activities, weekly report, referral directory, a guided “Sara” story, and EN / Urdu / Roman Urdu. Fully offline, with no real child data.",
+      },
+      {
+        label: "Sep 2026",
+        title: "Ship and ask for feedback",
+        body: "Deployed on Vercel, then added an in-site feedback page the same day to recruit parents and child psychologists to review the demo.",
+      },
+      {
+        label: "Next",
+        title: "Validate with real families",
+        body: "Customer interviews to test the pricing and the check-in habit, before building the real backend.",
       },
     ],
     url: "https://nurture-ai-kappa.vercel.app",
-    images: ["/img/nurtureai-1.jpg"],
+    images: ["/img/nurtureai-1.jpg", "/img/nurtureai-2.jpg"],
   },
   {
     id: "studyforge",
