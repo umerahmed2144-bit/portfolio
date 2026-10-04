@@ -11,6 +11,7 @@ const FRICTION = 13;
 
 /**
  * Image with an SVG turbulence/displacement filter that wobbles on hover.
+ *  - distort={false}: no hover wobble (used for the portrait).
  *  - bare: just the filtered image, no surface/veil/glow (hero portrait).
  *    Renders nothing if the image is missing.
  *  - full: grayscale→colour veil, violet/cyan glow sweep, vignette and a
@@ -26,6 +27,7 @@ export default function LiquidImage({
   position = "center",
   placeholderLabel,
   eager = false,
+  distort = true,
   style,
 }) {
   const filterId = `liquid-${useId().replace(/[^a-zA-Z0-9-]/g, "")}`;
@@ -74,7 +76,7 @@ export default function LiquidImage({
   };
 
   const setHover = (on) => {
-    if (missing || !canHover()) return;
+    if (!distort || missing || !canHover()) return;
     figRef.current?.classList.toggle("is-hover", on);
     const s = spring.current;
     s.target = on ? 1 : 0;

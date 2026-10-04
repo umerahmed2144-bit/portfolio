@@ -100,7 +100,7 @@ export default function Hero() {
             src={person.portrait}
             alt={`Portrait of ${person.name}`}
             bare
-            scaleTo={30}
+            distort={false}
             fit="contain"
             position="center bottom"
             eager
