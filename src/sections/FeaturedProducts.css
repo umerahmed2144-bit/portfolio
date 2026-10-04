@@ -1,14 +1,17 @@
 /* ---------- Lead case study ---------- */
 .case {
   margin-top: 4rem;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 3rem;
   padding-bottom: 6rem;
   border-bottom: 1px solid var(--line);
 }
+/* media + text; the sticky media is contained here so it never slides over the journey */
+.case-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 3rem;
+}
 @media (min-width: 1024px) {
-  .case { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); }
+  .case-top { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); }
   .case-media { grid-column: span 7; position: sticky; top: 6rem; align-self: start; }
   .case-body { grid-column: span 5; }
 }
@@ -108,8 +111,7 @@
 
 /* ---------- Development journey ---------- */
 .journey {
-  grid-column: 1 / -1;
-  order: 3; /* stay last even when the case is flipped */
+  margin-top: 4rem;
   border-top: 1px solid var(--line);
   padding-top: 3rem;
 }

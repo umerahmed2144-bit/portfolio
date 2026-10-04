@@ -53,50 +53,52 @@ function CaseStudy({ product, number, flipped = false }) {
   const [main, ...thumbs] = product.images;
   return (
     <article id={`product-${product.id}`} className={`case group${flipped ? " is-flipped" : ""}`}>
-      <Reveal className="case-media" y={60} duration={620}>
-        <LiquidImage
-          src={main}
-          alt={`${product.name} screenshot`}
-          placeholderLabel={product.name}
-          className="case-main"
-        />
-        {thumbs.length > 0 && (
-          <div className={`case-thumbs${thumbs.length === 1 ? " is-single" : ""}`}>
-            {thumbs.map((src, i) => (
-              <LiquidImage
-                key={i}
-                src={src}
-                alt={`${product.name} screenshot ${i + 2}`}
-                scaleTo={22}
-                className="case-thumb"
-              />
-            ))}
-          </div>
-        )}
-      </Reveal>
+      <div className="case-top">
+        <Reveal className="case-media" y={60} duration={620}>
+          <LiquidImage
+            src={main}
+            alt={`${product.name} screenshot`}
+            placeholderLabel={product.name}
+            className="case-main"
+          />
+          {thumbs.length > 0 && (
+            <div className={`case-thumbs${thumbs.length === 1 ? " is-single" : ""}`}>
+              {thumbs.map((src, i) => (
+                <LiquidImage
+                  key={i}
+                  src={src}
+                  alt={`${product.name} screenshot ${i + 2}`}
+                  scaleTo={22}
+                  className="case-thumb"
+                />
+              ))}
+            </div>
+          )}
+        </Reveal>
 
-      <div className="case-body">
-        <Reveal className="case-meta" delay={80}>
-          <span className="case-index display">{num(number)}</span>
-          <Status product={product} />
-        </Reveal>
-        <Reveal delay={120}>
-          <h3 className="display case-name">{product.name}</h3>
-          <p className="case-tagline">{product.tagline}</p>
-          <p className="label case-audience">{product.audience}</p>
-        </Reveal>
-        <dl className="case-blocks">
-          {product.blocks.map((b, i) => (
-            <Reveal key={b.title} className="case-block" delay={160 + i * 90}>
-              <dt className="label">{b.title}</dt>
-              <dd>{b.body}</dd>
-            </Reveal>
-          ))}
-        </dl>
-        <Reveal className="case-foot" delay={200}>
-          <Stack items={product.stack} />
-          <LiveLink product={product} />
-        </Reveal>
+        <div className="case-body">
+          <Reveal className="case-meta" delay={80}>
+            <span className="case-index display">{num(number)}</span>
+            <Status product={product} />
+          </Reveal>
+          <Reveal delay={120}>
+            <h3 className="display case-name">{product.name}</h3>
+            <p className="case-tagline">{product.tagline}</p>
+            <p className="label case-audience">{product.audience}</p>
+          </Reveal>
+          <dl className="case-blocks">
+            {product.blocks.map((b, i) => (
+              <Reveal key={b.title} className="case-block" delay={160 + i * 90}>
+                <dt className="label">{b.title}</dt>
+                <dd>{b.body}</dd>
+              </Reveal>
+            ))}
+          </dl>
+          <Reveal className="case-foot" delay={200}>
+            <Stack items={product.stack} />
+            <LiveLink product={product} />
+          </Reveal>
+        </div>
       </div>
       {product.journey && <Journey steps={product.journey} />}
     </article>
