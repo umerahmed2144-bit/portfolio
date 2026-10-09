@@ -48,8 +48,8 @@ export const hero = {
 };
 
 export const showreel = {
-  // Off until the encoded files are in public/reel/; hides the section and nav link.
-  enabled: false,
+  // Set to false to hide the section and its nav link.
+  enabled: true,
   eyebrow: "Showreel ’26",
   heading: ["15 seconds", "of motion."],
   caption: "Built in code with Remotion, React and Three.js, cut to the beat of the track.",
