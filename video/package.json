@@ -1,0 +1,21 @@
+{
+  "name": "umer-ahmed-portfolio-video",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "studio": "remotion studio src/index.js",
+    "still": "remotion still src/index.js Portfolio4x5",
+    "render": "remotion render src/index.js Portfolio4x5 out/portfolio-4x5.mp4"
+  },
+  "dependencies": {
+    "@fontsource/anton": "^5.3.0",
+    "@fontsource/onest": "^5.3.1",
+    "@react-three/fiber": "^9.8.1",
+    "@remotion/cli": "^4.0.534",
+    "@remotion/three": "^4.0.534",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "remotion": "^4.0.534",
+    "three": "^0.186.1"
+  }
+}
