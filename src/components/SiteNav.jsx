@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
-import { nav, person } from "../content";
+import { nav as allNav, person, showreel } from "../content";
 import { getLenis } from "../hooks/lenis";
 import "./SiteNav.css";
+
+// The Reel link only appears once the showreel section is switched on.
+const nav = allNav.filter((l) => l.needs !== "showreel" || showreel.enabled);
 
 export default function SiteNav() {
   const [open, setOpen] = useState(false);

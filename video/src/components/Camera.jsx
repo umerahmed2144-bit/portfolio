@@ -1,15 +1,17 @@
 import { AbsoluteFill, useCurrentFrame } from "remotion";
-import { beatPulse, downbeatPulse, hitEnvelope } from "./beat";
+import { useBeat } from "./beat";
 
 /**
  * Global camera rig. Every scene sits inside it, so the whole frame:
  *  - punches in a touch on each beat and harder on downbeats
  *  - shakes and splits colour (red/cyan fringes) on accent hits
+ * The beat grid comes from BeatContext, so each composition uses its own track.
  */
-export function Camera({ children }) {
+export function Camera({ children, strength = 1 }) {
   const frame = useCurrentFrame();
-  const hit = Math.min(hitEnvelope(frame), 1.4);
-  const zoom = 1 + 0.01 * beatPulse(frame) + 0.022 * downbeatPulse(frame) + 0.03 * hit;
+  const { beatPulse, downbeatPulse, hitEnvelope } = useBeat();
+  const hit = Math.min(hitEnvelope(frame), 1.4) * strength;
+  const zoom = 1 + (0.01 * beatPulse(frame) + 0.022 * downbeatPulse(frame)) * strength + 0.03 * hit;
   // Deterministic shake: two incommensurate sines scaled by the hit envelope.
   const sx = Math.sin(frame * 2.7) * 14 * hit;
   const sy = Math.cos(frame * 3.3) * 10 * hit;

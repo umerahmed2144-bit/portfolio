@@ -1,0 +1,112 @@
+.reel .section-head .h { max-width: 14ch; }
+.reel-caption {
+  max-width: 30ch;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: var(--fs-body);
+  line-height: 1.5;
+  color: var(--muted);
+}
+@media (min-width: 640px) { .reel-caption { text-align: right; } }
+
+.reel-frame { margin-top: 3.5rem; }
+.reel-player {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  box-shadow: 0 2.5rem 8rem -2.5rem rgba(139, 92, 246, 0.55);
+}
+.reel-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+/* viewfinder corners */
+.reel-corner {
+  position: absolute;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-color: rgba(243, 241, 234, 0.7);
+  border-style: solid;
+  border-width: 0;
+  pointer-events: none;
+}
+.reel-corner.tl { top: 1rem; left: 1rem; border-top-width: 2px; border-left-width: 2px; }
+.reel-corner.tr { top: 1rem; right: 1rem; border-top-width: 2px; border-right-width: 2px; }
+.reel-corner.bl { bottom: 1rem; left: 1rem; border-bottom-width: 2px; border-left-width: 2px; }
+.reel-corner.br { bottom: 1rem; right: 1rem; border-bottom-width: 2px; border-right-width: 2px; }
+
+.reel-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 5.5rem;
+  height: 5.5rem;
+  margin: -2.75rem 0 0 -2.75rem;
+  border-radius: 9999px;
+  display: grid;
+  place-items: center;
+  background: var(--accent);
+  color: #fff;
+  font-size: 1.75rem;
+  box-shadow: 0 0 0 0.75rem rgba(139, 92, 246, 0.25), 0 1.5rem 4rem -1rem rgba(139, 92, 246, 0.9);
+  transition: transform 300ms var(--ease-out);
+}
+.reel-play:hover { transform: scale(1.06); }
+.reel-play span { margin-left: 0.25rem; }
+
+.reel-controls {
+  position: absolute;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  display: flex;
+  gap: 0.5rem;
+}
+.reel-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1rem;
+  border-radius: 9999px;
+  background: rgba(8, 8, 10, 0.72);
+  border: 1px solid var(--line-strong);
+  backdrop-filter: blur(8px);
+  font-size: var(--fs-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--foreground);
+  transition: border-color 300ms ease-out, color 300ms ease-out;
+}
+.reel-btn:hover { border-color: var(--accent-2); color: var(--accent-2); }
+.reel-btn.is-on { border-color: var(--accent-2); color: var(--accent-2); }
+
+/* tiny equaliser: flat when muted, bouncing when sound is on */
+.reel-eq { display: inline-flex; align-items: flex-end; gap: 2px; height: 0.8rem; }
+.reel-eq i { width: 3px; height: 30%; background: currentColor; border-radius: 1px; }
+.reel-btn.is-on .reel-eq i { animation: reel-eq 0.9s ease-in-out infinite; }
+.reel-btn.is-on .reel-eq i:nth-child(2) { animation-delay: -0.3s; }
+.reel-btn.is-on .reel-eq i:nth-child(3) { animation-delay: -0.6s; }
+@keyframes reel-eq { 0%, 100% { height: 30%; } 50% { height: 100%; } }
+
+.reel-credit { margin-top: 1rem; font-size: 0.6875rem; letter-spacing: 0.14em; }
+
+@media (max-width: 639px) {
+  .reel-player { border-radius: 0.75rem; }
+  .reel-controls { right: 0.6rem; bottom: 0.6rem; }
+  .reel-btn { padding: 0.4rem 0.7rem; font-size: 0.625rem; }
+  .reel-corner { width: 1rem; height: 1rem; }
+  .reel-corner.tl, .reel-corner.tr { top: 0.6rem; }
+  .reel-corner.bl, .reel-corner.br { bottom: 0.6rem; }
+  .reel-corner.tl, .reel-corner.bl { left: 0.6rem; }
+  .reel-corner.tr, .reel-corner.br { right: 0.6rem; }
+  .reel-play { width: 4rem; height: 4rem; margin: -2rem 0 0 -2rem; font-size: 1.25rem; }
+}

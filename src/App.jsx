@@ -3,6 +3,8 @@ import Preloader from "./components/Preloader";
 import SiteNav from "./components/SiteNav";
 import Marquee from "./components/Marquee";
 import Hero from "./sections/Hero";
+import Showreel from "./sections/Showreel";
+import { showreel } from "./content";
 import FeaturedProducts from "./sections/FeaturedProducts";
 import ClientWork from "./sections/ClientWork";
 import Experiments from "./sections/Experiments";
@@ -39,6 +41,7 @@ export default function App() {
       <SiteNav />
       <main>
         <Hero />
+        {showreel.enabled && <Showreel />}
         <Marquee />
         <FeaturedProducts />
         <ClientWork />

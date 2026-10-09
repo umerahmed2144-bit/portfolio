@@ -1,8 +1,7 @@
 import { useMemo } from "react";
-import { useCurrentFrame } from "remotion";
+import { useCurrentFrame, useVideoConfig } from "remotion";
 import { ThreeCanvas } from "@remotion/three";
 import * as THREE from "three";
-import { W, H } from "../theme";
 import { rng } from "./ease";
 
 const VIOLET = new THREE.Color("#8b5cf6");
@@ -140,12 +139,13 @@ function Core({ radius, detail, color, opacity, rot, shatter, seed }) {
  *  orbit    radians around Y                   tilt    radians around X
  *  dolly    world z offset (toward camera +)   y       core vertical offset
  */
-export function CoreScene({ opacity = 1, warp = 0, travel = 0, shell = 1, shatter = 0, core = 1, orbit = 0, tilt = 0, dolly = 0, y = 0.4, spin = 1 }) {
+export function CoreScene({ opacity = 1, warp = 0, travel = 0, shell = 1, shatter = 0, core = 1, orbit = 0, tilt = 0, dolly = 0, y = 0.4, spin = 1, x = 0 }) {
   const frame = useCurrentFrame();
+  const { width: W, height: H } = useVideoConfig();
   const t = (frame / 30) * spin;
   return (
     <div style={{ position: "absolute", left: 0, top: 0, width: W * RES, height: H * RES, transform: `scale(${1 / RES})`, transformOrigin: "0 0", opacity }}>
-      <ThreeCanvas width={W * RES} height={H * RES} camera={{ position: [0, 0, 9], fov: 50 }} gl={{ antialias: true, alpha: true }}>
+      <ThreeCanvas width={W * RES} height={H * RES} camera={{ position: [x, 0, 9], fov: 50 }} gl={{ antialias: true, alpha: true }}>
         <fog attach="fog" args={["#08080a", 7, 18]} />
         <Warp count={900} travel={travel} warp={warp} />
         <group rotation={[tilt, orbit, 0]} position={[0, 0, dolly]}>

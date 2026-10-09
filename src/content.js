@@ -29,6 +29,7 @@ export const contact = {
 };
 
 export const nav = [
+  { label: "Reel", href: "#reel", needs: "showreel" },
   { label: "Work", href: "#work" },
   { label: "Clients", href: "#clients" },
   { label: "Lab", href: "#lab" },
@@ -44,6 +45,20 @@ export const hero = {
   primaryCta: { label: "Hire me for a build", href: "#contact" },
   secondaryCta: { label: "Download CV" },
   scrollCue: "Scroll to explore",
+};
+
+export const showreel = {
+  // Off until the encoded files are in public/reel/; hides the section and nav link.
+  enabled: false,
+  eyebrow: "Showreel ’26",
+  heading: ["15 seconds", "of motion."],
+  caption: "Built in code with Remotion, React and Three.js, cut to the beat of the track.",
+  // Rendered from video/ (composition "Showreel16x9").
+  webm: "/reel/showreel.webm",
+  mp4: "/reel/showreel.mp4",
+  mp4Small: "/reel/showreel-720.mp4",
+  poster: "/reel/poster.jpg",
+  credit: "Music: “Kenji” by Ooyy (Epidemic Sound)",
 };
 
 export const marquee = [
