@@ -10,6 +10,8 @@ export function RemotionRoot() {
     <>
       <Composition id="Portfolio4x5" component={Portfolio} durationInFrames={DURATION} fps={FPS} width={W} height={H} />
       <Composition id="Showreel16x9" component={Showreel} durationInFrames={REEL_DURATION} fps={FPS} width={1920} height={1080} />
+      {/* LinkedIn feed cut: same reel, scenes re-lay out for portrait */}
+      <Composition id="Showreel4x5" component={Showreel} durationInFrames={REEL_DURATION} fps={FPS} width={1080} height={1350} />
     </>
   );
 }

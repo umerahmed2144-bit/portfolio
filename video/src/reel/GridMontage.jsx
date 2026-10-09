@@ -1,37 +1,50 @@
-import { AbsoluteFill, Img, staticFile, useCurrentFrame, interpolate } from "remotion";
+import { AbsoluteFill, Img, staticFile, useCurrentFrame, useVideoConfig, interpolate } from "remotion";
 import { C, F } from "../theme";
 import { beatF } from "./timing";
 import { tween, expo } from "../components/ease";
+import { PRODUCTS } from "./data";
 
-const PANES = [
-  { name: "FulfillIQ", src: "img/fulfilliq-1.jpg" },
-  { name: "NurtureAI", src: "img/nurtureai-2.jpg" },
-  { name: "StudyForge", src: "img/studyforge-1.jpg" },
-  { name: "RestockIQ", src: "img/restockiq-1.jpg" },
-];
-
-const M = 60; // outer margin
 const G = 20; // gutter
-const W = 1920 - M * 2;
-const H = 1080 - M * 2;
-const half = (W - G) / 2;
-const halfH = (H - G) / 2;
-const third = (W - 2 * G) / 3;
-const thirdH = (H - 2 * G) / 3;
 
-// One layout per beat: rect [x, y, w, h] per pane (null = not yet on screen).
-const LAYOUTS = [
-  [[0, 0, W, H], null, null, null],
-  [[0, 0, half, H], [half + G, 0, half, H], null, null],
-  [[0, 0, half, halfH], [half + G, 0, half, halfH], [0, halfH + G, half, halfH], [half + G, halfH + G, half, halfH]],
-  [[0, 0, third * 2 + G, H], [third * 2 + G * 2, 0, third, thirdH], [third * 2 + G * 2, thirdH + G, third, thirdH], [third * 2 + G * 2, (thirdH + G) * 2, third, thirdH]],
-];
+/**
+ * One layout per beat: rect [x, y, w, h] per pane (null = not on screen yet).
+ * Landscape splits side by side; portrait stacks, so panes stay readable.
+ */
+function layouts(W, H, landscape) {
+  const half = (W - G) / 2;
+  const halfH = (H - G) / 2;
+  if (landscape) {
+    const third = (W - 2 * G) / 3;
+    const thirdH = (H - 2 * G) / 3;
+    return [
+      [[0, 0, W, H], null, null, null],
+      [[0, 0, half, H], [half + G, 0, half, H], null, null],
+      [[0, 0, half, halfH], [half + G, 0, half, halfH], [0, halfH + G, half, halfH], [half + G, halfH + G, half, halfH]],
+      [[0, 0, third * 2 + G, H], [third * 2 + G * 2, 0, third, thirdH], [third * 2 + G * 2, thirdH + G, third, thirdH], [third * 2 + G * 2, (thirdH + G) * 2, third, thirdH]],
+    ];
+  }
+  const third = (W - 2 * G) / 3;
+  const big = H * 0.6;
+  return [
+    [[0, 0, W, H], null, null, null],
+    [[0, 0, W, halfH], [0, halfH + G, W, halfH], null, null],
+    [[0, 0, half, halfH], [half + G, 0, half, halfH], [0, halfH + G, half, halfH], [half + G, halfH + G, half, halfH]],
+    [[0, 0, W, big], [0, big + G, third, H - big - G], [third + G, big + G, third, H - big - G], [(third + G) * 2, big + G, third, H - big - G]],
+  ];
+}
 
 const lerp = (a, b, p) => a + (b - a) * p;
 
-// Bar 3 (5.7 → 7.6s): the work, in a split-screen grid that re-flows on every beat.
+// Bar 3: the live products, in a split-screen grid that re-flows on every beat.
 export function GridMontage() {
   const frame = useCurrentFrame();
+  const { width, height } = useVideoConfig();
+  const landscape = width >= height;
+  const M = landscape ? 60 : 84; // outer margin (portrait keeps clear of LinkedIn's UI)
+  const top = landscape ? M : 150;
+  const W = width - M * 2;
+  const H = height - top - (landscape ? M : 190);
+  const LAYOUTS = layouts(W, H, landscape);
   const beats = [0, 1, 2, 3].map(beatF);
   let k = 0;
   beats.forEach((b, i) => {
@@ -43,7 +56,7 @@ export function GridMontage() {
 
   return (
     <AbsoluteFill>
-      {PANES.map((pane, i) => {
+      {PRODUCTS.slice(0, 4).map((pane, i) => {
         const target = to[i];
         if (!target) return null;
         const source = from[i] || target; // new panes appear in place
@@ -51,13 +64,14 @@ export function GridMontage() {
         const [x, y, w, h] = target.map((v, j) => lerp(source[j], v, p));
         const reveal = isNew ? p : 1;
         const parallax = interpolate(frame, [0, 58], [-30, 30]) * (i % 2 ? -1 : 1);
+        const small = w < 500;
         return (
           <div
             key={pane.name}
             style={{
               position: "absolute",
               left: M + x,
-              top: M + y,
+              top: top + y,
               width: w,
               height: h,
               overflow: "hidden",
@@ -68,7 +82,7 @@ export function GridMontage() {
             }}
           >
             <Img
-              src={staticFile(pane.src)}
+              src={staticFile(pane.image)}
               style={{
                 position: "absolute",
                 left: "50%",
@@ -80,13 +94,35 @@ export function GridMontage() {
                 transform: `translate(calc(-50% + ${parallax}px), -50%) scale(${Math.max(w / 1800, h / 1125) * 1.08})`,
               }}
             />
-            <div style={{ position: "absolute", left: 18, bottom: 16, padding: "8px 16px", borderRadius: 99, background: "rgba(8,8,10,0.78)", border: `1px solid ${C.lineStrong}`, fontFamily: F.sans, fontWeight: 600, fontSize: 22, letterSpacing: "0.08em", color: C.fg }}>
-              <span style={{ color: C.cyan, marginRight: 10 }}>●</span>
+            <div
+              style={{
+                position: "absolute",
+                left: 16,
+                bottom: 14,
+                padding: small ? "6px 12px" : "8px 16px",
+                borderRadius: 99,
+                background: "rgba(8,8,10,0.8)",
+                border: `1px solid ${C.lineStrong}`,
+                fontFamily: F.sans,
+                fontWeight: 600,
+                fontSize: small ? 18 : 22,
+                letterSpacing: "0.06em",
+                color: C.fg,
+                whiteSpace: "nowrap",
+              }}
+            >
+              <span style={{ color: C.cyan, marginRight: 8 }}>●</span>
               {pane.name}
             </div>
           </div>
         );
       })}
+      {/* in portrait the first pane's tagline sits above the grid */}
+      {!landscape && k === 0 && (
+        <div style={{ position: "absolute", left: M, right: M, top: 70, fontFamily: F.sans, fontWeight: 600, fontSize: 34, color: C.fg, opacity: tween(frame, 2, 8) }}>
+          {PRODUCTS[0].tagline}
+        </div>
+      )}
     </AbsoluteFill>
   );
 }

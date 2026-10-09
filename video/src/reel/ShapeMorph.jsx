@@ -1,4 +1,4 @@
-import { AbsoluteFill, useCurrentFrame } from "remotion";
+import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { C, F } from "../theme";
 import { beatF } from "./timing";
 import { tween, expo, inOut } from "../components/ease";
@@ -29,6 +29,7 @@ const pathFor = (radius, R, cx, cy) =>
 // beats, then collapses into the UA monogram drawing itself.
 export function ShapeMorph() {
   const frame = useCurrentFrame();
+  const { width, height } = useVideoConfig();
   const t = frame / 30;
   // Morph every three-quarter beat so the monogram gets the back half of the bar.
   const beats = [0, 0.75, 1.5, 2.25].map(beatF);
@@ -44,13 +45,13 @@ export function ShapeMorph() {
   const collapse = tween(frame, beats[3] + 4, 7, inOut);
   const draw = tween(frame, beats[3] + 6, 11, expo);
   const R = 300 * (1 - collapse) * (1 + 0.05 * Math.sin(t * 6));
-  const cx = 960;
-  const cy = 540;
+  const cx = width / 2;
+  const cy = height / 2;
   const spin = frame * 1.2;
 
   return (
     <AbsoluteFill>
-      <svg width="1920" height="1080" style={{ position: "absolute", inset: 0 }}>
+      <svg width={width} height={height} style={{ position: "absolute", inset: 0 }}>
         <defs>
           <linearGradient id="sm-g" x1="0" y1="0" x2="1" y2="1">
             <stop offset="0" stopColor={C.violetSoft} />

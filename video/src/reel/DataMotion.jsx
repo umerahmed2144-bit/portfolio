@@ -1,39 +1,46 @@
-import { AbsoluteFill, useCurrentFrame } from "remotion";
+import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { C, F } from "../theme";
 import { beatF } from "./timing";
 import { Odometer } from "../components/fx";
 import { tween, expo, inOut } from "../components/ease";
 
-const STATS = [
-  { value: "4", suffix: "", label: "AI products, live" },
-  { value: "550", suffix: "K+", label: "PKR raised · Rizq LSE" },
-  { value: "5", suffix: "", label: "step build process" },
-];
-const STEPS = ["Problem", "Spec", "Build", "Economics", "Ship"];
+import { STATS, STEPS } from "./data";
 
 // Bar 4 (7.6 → 9.5s): numbers roll, bars grow and a line draws, all on beats.
 export function DataMotion() {
   const frame = useCurrentFrame();
+  const { width, height } = useVideoConfig();
+  const landscape = width >= height;
   const beats = [0, 1, 2, 3].map(beatF);
-  const CW = 860;
-  const CH = 560;
-  const bw = 120;
-  const gap = (CW - bw * 5) / 4;
+  const CW = landscape ? 860 : width - 2 * 84;
+  const CH = landscape ? 560 : 400;
+  const statSize = landscape ? 170 : 118;
+  const n = STEPS.length;
+  const bw = landscape ? 120 : 130;
+  const gap = (CW - bw * n) / (n - 1);
+  const rise = (CH - 180) / (n - 1);
   const line = tween(frame, beats[1], beats[3] - beats[1] + 8, inOut);
-  const pts = STEPS.map((_, i) => [i * (bw + gap) + bw / 2, CH - 80 - i * 95]);
+  const pts = STEPS.map((_, i) => [i * (bw + gap) + bw / 2, CH - 80 - i * rise]);
   const path = pts.map(([x, y], i) => `${i ? "L" : "M"}${x},${y}`).join(" ");
   const len = 1100;
 
   return (
-    <AbsoluteFill style={{ padding: "150px 140px", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-      <div style={{ display: "flex", flexDirection: "column", gap: 44 }}>
+    <AbsoluteFill
+      style={{
+        padding: landscape ? "150px 140px" : "130px 84px 200px",
+        flexDirection: landscape ? "row" : "column",
+        justifyContent: "space-between",
+        alignItems: landscape ? "center" : "flex-start",
+      }}
+    >
+      <div style={{ display: "flex", flexDirection: "column", gap: landscape ? 44 : 18 }}>
         {STATS.map((s, i) => {
           const p = tween(frame, beats[i], 10, expo);
           return (
             <div key={s.label} style={{ opacity: p, transform: `translateX(${(1 - p) * -80}px)` }}>
               <div style={{ display: "flex", alignItems: "flex-end", fontFamily: F.display, color: C.fg }}>
-                <Odometer value={s.value} start={beats[i]} dur={16} size={170} digitStyle={{ fontFamily: F.display, lineHeight: 1, background: `linear-gradient(180deg, ${C.fg} 30%, ${C.violetSoft})`, WebkitBackgroundClip: "text", color: "transparent" }} />
-                {s.suffix && <span style={{ fontSize: 170, lineHeight: 1, color: C.violetSoft }}>{s.suffix}</span>}
+                <Odometer value={s.value} start={beats[i]} dur={16} size={statSize} digitStyle={{ fontFamily: F.display, lineHeight: 1, background: `linear-gradient(180deg, ${C.fg} 30%, ${C.violetSoft})`, WebkitBackgroundClip: "text", color: "transparent" }} />
+                {s.suffix && <span style={{ fontSize: statSize, lineHeight: 1, color: C.violetSoft }}>{s.suffix}</span>}
               </div>
               <div style={{ marginTop: 6, fontFamily: F.sans, fontWeight: 500, fontSize: 28, letterSpacing: "0.14em", textTransform: "uppercase", color: C.muted }}>{s.label}</div>
             </div>
@@ -54,7 +61,7 @@ export function DataMotion() {
         ))}
         {STEPS.map((s, i) => {
           const p = tween(frame, beats[0] + i * 3, 14, expo);
-          const h = (130 + i * 95) * p;
+          const h = (130 + i * rise) * p;
           const x = i * (bw + gap);
           return (
             <g key={s}>

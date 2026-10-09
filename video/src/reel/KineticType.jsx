@@ -1,4 +1,4 @@
-import { AbsoluteFill, useCurrentFrame, spring } from "remotion";
+import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring } from "remotion";
 import { C, F } from "../theme";
 import { beatF } from "./timing";
 import { tween, expo } from "../components/ease";
@@ -6,7 +6,7 @@ import { tween, expo } from "../components/ease";
 const display = { fontFamily: F.display, textTransform: "uppercase", lineHeight: 0.86, letterSpacing: "-0.01em" };
 
 /** DESIGN: the word assembles from horizontal slices sliding in from alternating sides. */
-function Sliced({ text, local, color }) {
+function Sliced({ text, local, color, size }) {
   const bands = 7;
   return (
     <div style={{ position: "relative" }}>
@@ -19,7 +19,7 @@ function Sliced({ text, local, color }) {
             aria-hidden={i > 0}
             style={{
               ...display,
-              fontSize: 400,
+              fontSize: size,
               color,
               position: i === 0 ? "relative" : "absolute",
               inset: 0,
@@ -36,9 +36,9 @@ function Sliced({ text, local, color }) {
 }
 
 /** BUILD: letters drop in and stack with a springy bounce. */
-function Stacked({ text, local, color, fps }) {
+function Stacked({ text, local, color, fps, size }) {
   return (
-    <div style={{ display: "flex", ...display, fontSize: 400, color }}>
+    <div style={{ display: "flex", ...display, fontSize: size, color }}>
       {Array.from(text).map((ch, i) => {
         const s = spring({ frame: local - i * 1.5, fps, config: { damping: 9, stiffness: 180, mass: 0.6 } });
         return (
@@ -52,21 +52,21 @@ function Stacked({ text, local, color, fps }) {
 }
 
 /** SHIP: slams from 3x with motion blur. */
-function Slam({ text, local, color }) {
+function Slam({ text, local, color, size }) {
   const p = tween(local, 0, 9, expo);
   return (
-    <div style={{ ...display, fontSize: 460, color, transform: `scale(${3 - p * 2})`, filter: p < 0.97 ? `blur(${(1 - p) * 18}px)` : undefined, opacity: Math.min(1, p * 3) }}>
+    <div style={{ ...display, fontSize: size, color, transform: `scale(${3 - p * 2})`, filter: p < 0.97 ? `blur(${(1 - p) * 18}px)` : undefined, opacity: Math.min(1, p * 3) }}>
       {text}
     </div>
   );
 }
 
 /** AI-FIRST: outline strokes draw on, then the fill floods in. */
-function Outline({ text, local }) {
+function Outline({ text, local, width }) {
   const draw = tween(local, 0, 10, expo);
   const fill = tween(local, 6, 8, expo);
   return (
-    <svg width="1700" height="420" viewBox="0 0 1700 420" style={{ overflow: "visible" }}>
+    <svg width={width} height={(width * 420) / 1700} viewBox="0 0 1700 420" style={{ overflow: "visible" }}>
       <defs>
         <linearGradient id="kt-g" x1="0" x2="1">
           <stop offset="0" stopColor={C.violetSoft} />
@@ -95,6 +95,9 @@ function Outline({ text, local }) {
 // full colour swap behind it.
 export function KineticType() {
   const frame = useCurrentFrame();
+  const { width } = useVideoConfig();
+  // Anton is ~0.5em per letter: keep the longest word inside the frame.
+  const big = Math.min(400, width * 0.31);
   const beats = [0, 1, 2, 3].map(beatF);
   let k = 0;
   beats.forEach((b, i) => {
@@ -110,10 +113,10 @@ export function KineticType() {
     <AbsoluteFill style={{ background: prevBg }}>
       <AbsoluteFill style={{ background: bg, clipPath: `polygon(0 0, ${wipe * 140}% 0, ${wipe * 140 - 40}% 100%, 0 100%)` }} />
       <AbsoluteFill style={{ justifyContent: "center", alignItems: "center" }}>
-        {k === 0 && <Sliced text="DESIGN" local={local} color={ink} />}
-        {k === 1 && <Stacked text="BUILD" local={local} color={ink} fps={30} />}
-        {k === 2 && <Slam text="SHIP" local={local} color={ink} />}
-        {k === 3 && <Outline text="AI-FIRST" local={local} />}
+        {k === 0 && <Sliced text="DESIGN" local={local} color={ink} size={big} />}
+        {k === 1 && <Stacked text="BUILD" local={local} color={ink} fps={30} size={big} />}
+        {k === 2 && <Slam text="SHIP" local={local} color={ink} size={Math.min(460, width * 0.42)} />}
+        {k === 3 && <Outline text="AI-FIRST" local={local} width={Math.min(1700, width * 0.92)} />}
       </AbsoluteFill>
       {/* beat counter */}
       <div style={{ position: "absolute", left: 140, bottom: 70, fontFamily: F.sans, fontWeight: 600, fontSize: 24, letterSpacing: "0.2em", color: ink, opacity: 0.7 }}>

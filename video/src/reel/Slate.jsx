@@ -2,11 +2,12 @@ import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { C, F } from "../theme";
 import { f, beatT } from "./timing";
 import { tween, expo } from "../components/ease";
+import { NAME } from "./data";
 
 const mono = "ui-monospace, SFMono-Regular, Menlo, monospace";
 
 /** Camera-viewfinder chrome: crop marks, safe frame, REC dot, running timecode. */
-export function Viewfinder({ frame, opacity = 1, label = "UMER AHMED — SHOWREEL ’26" }) {
+export function Viewfinder({ frame, opacity = 1, label = `${NAME.toUpperCase()} — SHOWREEL ’26` }) {
   const { width: W, height: H, fps } = useVideoConfig();
   const tc = (n) => String(n).padStart(2, "0");
   const timecode = `00:00:${tc(Math.floor(frame / fps))}:${tc(frame % fps)}`;
@@ -26,7 +27,7 @@ export function Viewfinder({ frame, opacity = 1, label = "UMER AHMED — SHOWREE
       </div>
       <div style={{ position: "absolute", right: 140, top: 76, fontVariantNumeric: "tabular-nums" }}>{timecode}</div>
       <div style={{ position: "absolute", left: 140, bottom: 76, color: C.muted }}>{label}</div>
-      <div style={{ position: "absolute", right: 140, bottom: 76, color: C.muted }}>1920×1080 · 30 FPS</div>
+      <div style={{ position: "absolute", right: 140, bottom: 76, color: C.muted }}>{`${W}×${H} · 30 FPS`}</div>
     </AbsoluteFill>
   );
 }

@@ -1,14 +1,20 @@
-import { AbsoluteFill, useCurrentFrame } from "remotion";
+import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { C, F } from "../theme";
 import { CoreScene } from "../components/CoreScene";
 import { Flash } from "../components/fx";
 import { tween, expo } from "../components/ease";
 
-const NAMES = ["FULFILLIQ", "NURTUREAI", "STUDYFORGE", "RESTOCKIQ", "FULFILLIQ", "NURTUREAI", "STUDYFORGE", "RESTOCKIQ"];
+import { PRODUCTS } from "./data";
+
+// Every live product, twice round the ring.
+const NAMES = [...PRODUCTS, ...PRODUCTS].map((p) => p.name.toUpperCase());
 
 /** Product names on a ring orbiting the core (DOM 3D, preserve-3d). */
 function NameRing({ frame, reveal }) {
-  const R = 760;
+  const { width } = useVideoConfig();
+  // Keep the ring's widest names inside the frame (narrower in portrait).
+  const R = Math.min(760, width * 0.4);
+  const size = width < 1400 ? 80 : 96;
   const step = 360 / NAMES.length;
   const spin = frame * 1.6;
   return (
@@ -26,7 +32,7 @@ function NameRing({ frame, reveal }) {
                 transform: `translate(-50%, -50%) rotateY(${a}deg) translateZ(${R}px)`,
                 backfaceVisibility: "hidden",
                 fontFamily: F.display,
-                fontSize: 96,
+                fontSize: size,
                 lineHeight: 1,
                 whiteSpace: "nowrap",
                 color: i % 2 ? C.cyan : C.fg,

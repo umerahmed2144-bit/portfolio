@@ -1,8 +1,10 @@
-import { AbsoluteFill, useCurrentFrame, spring } from "remotion";
+import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring } from "remotion";
 import { C, F } from "../theme";
 import { beatF } from "./timing";
 
-const WORDS = ["Marketer", "Builder", "AI-first", "Shipper"];
+import { ROLES } from "./data";
+
+const WORDS = ROLES;
 const ROW = 150; // spacing between text rows on a wall
 
 /** One wall of the tunnel: rows of outlined words streaming toward camera. */
@@ -39,24 +41,23 @@ function Wall({ frame, style, color }) {
 // streaming outlined type.
 export function TextTunnel() {
   const frame = useCurrentFrame();
+  const { width: W, height: H } = useVideoConfig();
   const beats = [0, 1, 2, 3].map(beatF);
   // Cube angle springs to the next face on each beat.
   const angle = beats.reduce((acc, b, i) => (i === 0 ? acc : acc + 90 * spring({ frame: frame - b, fps: 30, config: { damping: 12, stiffness: 220, mass: 0.7 } })), 0);
   const D = 3600; // wall depth
-  const H = 1080;
-  const W = 1920;
-  const CUBE = 240;
+  const CUBE = W >= H ? 240 : 200;
+  const CW = Math.min(1200, W * 0.88);
   return (
     <AbsoluteFill style={{ perspective: 700, perspectiveOrigin: "50% 50%" }}>
-      {/* floor, ceiling, left and right walls, each hinged at a frame edge */}
-      {/* each wall is hinged on a frame edge and swung away from the camera, into depth */}
+      {/* floor, ceiling, left and right walls: each hinged on a frame edge and swung away into depth */}
       <Wall frame={frame} color={C.violetSoft} style={{ left: 0, top: H, width: W, height: D, transformOrigin: "50% 0", transform: "rotateX(-84deg)" }} />
       <Wall frame={frame} color={C.cyan} style={{ left: 0, top: -D, width: W, height: D, transformOrigin: "50% 100%", transform: "rotateX(84deg)" }} />
       <Wall frame={frame + 7} color={C.violetSoft} style={{ left: -D, top: 0, width: D, height: H, transformOrigin: "100% 50%", transform: "rotateY(-84deg)" }} />
       <Wall frame={frame + 3} color={C.cyan} style={{ left: W, top: 0, width: D, height: H, transformOrigin: "0 50%", transform: "rotateY(84deg)" }} />
 
       {/* the word cube */}
-      <div style={{ position: "absolute", left: "50%", top: "50%", width: 1200, height: CUBE, marginLeft: -600, marginTop: -CUBE / 2, transformStyle: "preserve-3d", transform: `translateZ(-120px) rotateX(${-angle}deg)` }}>
+      <div style={{ position: "absolute", left: "50%", top: "50%", width: CW, height: CUBE, marginLeft: -CW / 2, marginTop: -CUBE / 2, transformStyle: "preserve-3d", transform: `translateZ(-120px) rotateX(${-angle}deg)` }}>
         {WORDS.map((w, i) => (
           <div
             key={w}
@@ -71,7 +72,7 @@ export function TextTunnel() {
               background: i % 2 ? C.violet : C.fg,
               color: i % 2 ? C.fg : C.bg,
               fontFamily: F.display,
-              fontSize: 200,
+              fontSize: W >= H ? 200 : 150,
               lineHeight: 1,
               textTransform: "uppercase",
               boxShadow: "0 0 80px rgba(139,92,246,0.45)",
