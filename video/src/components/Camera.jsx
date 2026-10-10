@@ -7,11 +7,11 @@ import { useBeat } from "./beat";
  *  - shakes and splits colour (red/cyan fringes) on accent hits
  * The beat grid comes from BeatContext, so each composition uses its own track.
  */
-export function Camera({ children, strength = 1 }) {
+export function Camera({ children, strength = 1, beatStrength = strength, hitStrength = strength }) {
   const frame = useCurrentFrame();
   const { beatPulse, downbeatPulse, hitEnvelope } = useBeat();
-  const hit = Math.min(hitEnvelope(frame), 1.4) * strength;
-  const zoom = 1 + (0.01 * beatPulse(frame) + 0.022 * downbeatPulse(frame)) * strength + 0.03 * hit;
+  const hit = Math.min(hitEnvelope(frame), 1.4) * hitStrength;
+  const zoom = 1 + (0.01 * beatPulse(frame) + 0.022 * downbeatPulse(frame)) * beatStrength + 0.03 * hit;
   // Deterministic shake: two incommensurate sines scaled by the hit envelope.
   const sx = Math.sin(frame * 2.7) * 14 * hit;
   const sy = Math.cos(frame * 3.3) * 10 * hit;

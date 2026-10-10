@@ -1,10 +1,11 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring } from "remotion";
 import { C, F } from "../theme";
-import { beatF } from "./timing";
+import { stepF } from "./timing";
 
 import { ROLES } from "./data";
 
-const WORDS = ROLES;
+// Three faces, one flip every 1.5 beats (SHIP already landed in the kinetic scene).
+const WORDS = ROLES.slice(0, 3);
 const ROW = 150; // spacing between text rows on a wall
 
 /** One wall of the tunnel: rows of outlined words streaming toward camera. */
@@ -42,7 +43,7 @@ function Wall({ frame, style, color }) {
 export function TextTunnel() {
   const frame = useCurrentFrame();
   const { width: W, height: H } = useVideoConfig();
-  const beats = [0, 1, 2, 3].map(beatF);
+  const beats = [0, 1, 2].map(stepF);
   // Cube angle springs to the next face on each beat.
   const angle = beats.reduce((acc, b, i) => (i === 0 ? acc : acc + 90 * spring({ frame: frame - b, fps: 30, config: { damping: 12, stiffness: 220, mass: 0.7 } })), 0);
   const D = 3600; // wall depth

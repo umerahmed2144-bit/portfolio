@@ -61,44 +61,14 @@ function Slam({ text, local, color, size }) {
   );
 }
 
-/** AI-FIRST: outline strokes draw on, then the fill floods in. */
-function Outline({ text, local, width }) {
-  const draw = tween(local, 0, 10, expo);
-  const fill = tween(local, 6, 8, expo);
-  return (
-    <svg width={width} height={(width * 420) / 1700} viewBox="0 0 1700 420" style={{ overflow: "visible" }}>
-      <defs>
-        <linearGradient id="kt-g" x1="0" x2="1">
-          <stop offset="0" stopColor={C.violetSoft} />
-          <stop offset="1" stopColor={C.cyan} />
-        </linearGradient>
-      </defs>
-      <text
-        x="850"
-        y="350"
-        textAnchor="middle"
-        style={{ ...display, fontSize: 400 }}
-        fill="url(#kt-g)"
-        fillOpacity={fill}
-        stroke={C.fg}
-        strokeWidth={3}
-        strokeDasharray={1400}
-        strokeDashoffset={1400 * (1 - draw)}
-      >
-        {text}
-      </text>
-    </svg>
-  );
-}
-
-// Bar 1 (1.9 → 3.8s): one word per beat, each with its own technique and a
+// Intro (1.05 → 4.1s): one word every two beats, each with its own technique and a
 // full colour swap behind it.
 export function KineticType() {
   const frame = useCurrentFrame();
   const { width } = useVideoConfig();
   // Anton is ~0.5em per letter: keep the longest word inside the frame.
   const big = Math.min(400, width * 0.31);
-  const beats = [0, 1, 2, 3].map(beatF);
+  const beats = [0, 2, 4].map(beatF); // one word every two beats of the intro
   let k = 0;
   beats.forEach((b, i) => {
     if (frame >= b) k = i;
@@ -116,11 +86,10 @@ export function KineticType() {
         {k === 0 && <Sliced text="DESIGN" local={local} color={ink} size={big} />}
         {k === 1 && <Stacked text="BUILD" local={local} color={ink} fps={30} size={big} />}
         {k === 2 && <Slam text="SHIP" local={local} color={ink} size={Math.min(460, width * 0.42)} />}
-        {k === 3 && <Outline text="AI-FIRST" local={local} width={Math.min(1700, width * 0.92)} />}
       </AbsoluteFill>
       {/* beat counter */}
       <div style={{ position: "absolute", left: 140, bottom: 70, fontFamily: F.sans, fontWeight: 600, fontSize: 24, letterSpacing: "0.2em", color: ink, opacity: 0.7 }}>
-        {`0${k + 1} / 04`}
+        {`0${k + 1} / 03`}
       </div>
     </AbsoluteFill>
   );

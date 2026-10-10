@@ -1,6 +1,6 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { C, F } from "../theme";
-import { beatF } from "./timing";
+import { beatF, stepF } from "./timing";
 import { tween, expo, inOut } from "../components/ease";
 
 const N = 180; // samples around the shape
@@ -25,25 +25,26 @@ const pathFor = (radius, R, cx, cy) =>
     return `${i ? "L" : "M"}${(cx + Math.cos(a) * r).toFixed(1)},${(cy + Math.sin(a) * r).toFixed(1)}`;
   }).join(" ") + "Z";
 
-// Bar 5: one gradient form morphs blob → circle → square → triangle on the
-// beats, then collapses into the UA monogram drawing itself.
+// Shape: a liquid blob snaps into a square on the off-beat accent, then the
+// form collapses and the UA monogram draws itself.
 export function ShapeMorph() {
   const frame = useCurrentFrame();
   const { width, height } = useVideoConfig();
   const t = frame / 30;
-  // Morph every three-quarter beat so the monogram gets the back half of the bar.
-  const beats = [0, 0.75, 1.5, 2.25].map(beatF);
+  const ORDER = [0, 2]; // blob, square (indices into SHAPES)
+  const beats = [0, 1].map(stepF);
+  const mono = beatF(2.5); // monogram holds the last beat and a half
   let k = 0;
   beats.forEach((b, i) => {
     if (frame >= b) k = i;
   });
   const p = tween(frame - beats[k], 0, 8, expo);
-  const from = SHAPES[Math.max(0, k - 1)];
-  const to = SHAPES[k];
+  const from = SHAPES[ORDER[Math.max(0, k - 1)]];
+  const to = SHAPES[ORDER[k]];
   const radius = (a) => from(a, t) + (to(a, t) - from(a, t)) * (k === 0 ? 1 : p);
 
-  const collapse = tween(frame, beats[3] + 4, 7, inOut);
-  const draw = tween(frame, beats[3] + 6, 11, expo);
+  const collapse = tween(frame, mono - 4, 7, inOut);
+  const draw = tween(frame, mono - 2, 12, expo);
   const R = 300 * (1 - collapse) * (1 + 0.05 * Math.sin(t * 6));
   const cx = width / 2;
   const cy = height / 2;
@@ -80,7 +81,7 @@ export function ShapeMorph() {
               textAnchor="middle"
               style={{ fontFamily: F.display, fontSize: 180 }}
               fill={C.fg}
-              fillOpacity={tween(frame, beats[3] + 12, 8)}
+              fillOpacity={tween(frame, mono + 4, 8)}
               stroke={C.cyan}
               strokeWidth={3}
               strokeDasharray={700}
@@ -92,7 +93,7 @@ export function ShapeMorph() {
         )}
       </svg>
       <div style={{ position: "absolute", left: 140, bottom: 70, fontFamily: F.sans, fontWeight: 600, fontSize: 24, letterSpacing: "0.2em", color: C.muted }}>
-        {collapse > 0.5 ? "MONOGRAM" : ["FORM", "CIRCLE", "SQUARE", "TRIANGLE"][k]}
+        {collapse > 0.5 ? "MONOGRAM" : ["FORM", "SQUARE"][k]}
       </div>
     </AbsoluteFill>
   );

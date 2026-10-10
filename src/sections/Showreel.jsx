@@ -77,7 +77,7 @@ export default function Showreel() {
             onPlay={() => setPlaying(true)}
             onPause={() => setPlaying(false)}
             onClick={togglePlay}
-            aria-label="Showreel: 15 seconds of motion design featuring FulfillIQ, NurtureAI, StudyForge and RestockIQ"
+            aria-label="Showreel: 21 seconds of motion design featuring FulfillIQ, NurtureAI, StudyForge and RestockIQ"
           >
             <source src={showreel.mp4Small} type="video/mp4" media="(max-width: 768px)" />
             <source src={showreel.webm} type="video/webm" />

@@ -8,14 +8,14 @@ import { Viewfinder } from "./Slate";
 import { tween, expo } from "../components/ease";
 import { NAME, TAGLINE, URL, CTA } from "./data";
 
-// Final bar → end (12.53 → 15s): everything resolves into name, call to action
+// Outro (15.3 → 21s): everything resolves into name, call to action
 // and URL, framed by the opening viewfinder so the loop bookends.
 export function EndSlate() {
   const frame = useCurrentFrame();
   const { width, height } = useVideoConfig();
   const landscape = width >= height;
   const global = frame + S[7];
-  const accent = f(barT(8)) - S[7]; // last downbeat (14.2s)
+  const accent = f(barT(9)) - S[7]; // the outro's last full downbeat (19.4s)
   const frameIn = tween(frame, 0, 12, expo);
   const btn = spring({ frame: frame - 18, fps: 30, config: { damping: 11, stiffness: 150, mass: 0.7 } });
   const nameSize = Math.min(250, width * 0.19);

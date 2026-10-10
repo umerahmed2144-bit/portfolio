@@ -32,18 +32,18 @@ export function Viewfinder({ frame, opacity = 1, label = `${NAME.toUpperCase()} 
   );
 }
 
-// Pre-roll + bar 0 (0 → 2.53s): film-leader countdown 3·2·1 on the beats of
-// the first bar, then GO.
+// Pre-roll (0 → 1.05s): film-leader countdown 3·2·1 accelerating into the
+// first downbeat, where the kinetic type takes over.
 export function Slate() {
   const frame = useCurrentFrame();
-  const beats = [0, 1, 2, 3].map((n) => f(beatT(n)));
+  const beats = [0, f(beatT(-1)), f(beatT(-0.5)), f(beatT(0))];
   let k = 0;
   beats.forEach((b, i) => {
     if (frame >= b) k = i;
   });
   const local = frame - beats[k];
-  const sweep = Math.min(1, local / (beats[1] - beats[0]));
-  const label = ["3", "2", "1", "GO"][k];
+  const sweep = Math.min(1, local / ((beats[k + 1] ?? beats[k] + 8) - beats[k]));
+  const label = ["3", "2", "1", "1"][k];
   const pop = tween(local, 0, 8, expo);
   const R = 230;
   const circ = 2 * Math.PI * R;

@@ -1,17 +1,17 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { C, F } from "../theme";
-import { beatF } from "./timing";
+import { beatF, stepF } from "./timing";
 import { Odometer } from "../components/fx";
 import { tween, expo, inOut } from "../components/ease";
 
 import { STATS, STEPS } from "./data";
 
-// Bar 4 (7.6 → 9.5s): numbers roll, bars grow and a line draws, all on beats.
+// Data: numbers roll on every other beat while the bars grow and the line draws.
 export function DataMotion() {
   const frame = useCurrentFrame();
   const { width, height } = useVideoConfig();
   const landscape = width >= height;
-  const beats = [0, 1, 2, 3].map(beatF);
+  const beats = [...[0, 1, 2].map(stepF), beatF(4)]; // [3] = scene end
   const CW = landscape ? 860 : width - 2 * 84;
   const CH = landscape ? 560 : 400;
   const statSize = landscape ? 170 : 118;
@@ -19,7 +19,7 @@ export function DataMotion() {
   const bw = landscape ? 120 : 130;
   const gap = (CW - bw * n) / (n - 1);
   const rise = (CH - 180) / (n - 1);
-  const line = tween(frame, beats[1], beats[3] - beats[1] + 8, inOut);
+  const line = tween(frame, beats[0] + 8, beats[3] - beats[0] - 14, inOut);
   const pts = STEPS.map((_, i) => [i * (bw + gap) + bw / 2, CH - 80 - i * rise]);
   const path = pts.map(([x, y], i) => `${i ? "L" : "M"}${x},${y}`).join(" ");
   const len = 1100;
@@ -60,7 +60,7 @@ export function DataMotion() {
           <line key={g} x1={0} x2={CW * tween(frame, 0, 12, expo)} y1={CH - g * 140} y2={CH - g * 140} stroke={C.line} strokeWidth={2} />
         ))}
         {STEPS.map((s, i) => {
-          const p = tween(frame, beats[0] + i * 3, 14, expo);
+          const p = tween(frame, beats[0] + i * 5, 16, expo);
           const h = (130 + i * rise) * p;
           const x = i * (bw + gap);
           return (

@@ -51,7 +51,7 @@ export const showreel = {
   // Set to false to hide the section and its nav link.
   enabled: true,
   eyebrow: "Showreel ’26",
-  heading: ["15 seconds", "of motion."],
+  heading: ["21 seconds", "of motion."],
   caption: "Built in code with Remotion, React and Three.js, cut to the beat of the track.",
   // Rendered from video/ (composition "Showreel16x9").
   webm: "/reel/showreel.webm",

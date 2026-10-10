@@ -1,6 +1,6 @@
 import { AbsoluteFill, Img, staticFile, useCurrentFrame, useVideoConfig, interpolate } from "remotion";
 import { C, F } from "../theme";
-import { beatF } from "./timing";
+import { beatF, stepF } from "./timing";
 import { tween, expo } from "../components/ease";
 import { PRODUCTS } from "./data";
 
@@ -45,7 +45,7 @@ export function GridMontage() {
   const W = width - M * 2;
   const H = height - top - (landscape ? M : 190);
   const LAYOUTS = layouts(W, H, landscape);
-  const beats = [0, 1, 2, 3].map(beatF);
+  const beats = [0, 1, 2, 3].map(stepF);
   let k = 0;
   beats.forEach((b, i) => {
     if (frame >= b) k = i;
@@ -63,7 +63,7 @@ export function GridMontage() {
         const isNew = !from[i] || k === 0;
         const [x, y, w, h] = target.map((v, j) => lerp(source[j], v, p));
         const reveal = isNew ? p : 1;
-        const parallax = interpolate(frame, [0, 58], [-30, 30]) * (i % 2 ? -1 : 1);
+        const parallax = interpolate(frame, [0, beatF(6)], [-30, 30]) * (i % 2 ? -1 : 1);
         const small = w < 500;
         return (
           <div
